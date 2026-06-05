@@ -63,7 +63,7 @@ function preparePatchUI(title, isUnpatch) {
 }
 
 function navigateToHome() {
-    switchPage('home-page', 'KPatch Next', 'home');
+    switchPage('home-page', 'KPatch Next EXP', 'home');
 }
 
 function navigateToKPM() {
