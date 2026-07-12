@@ -52,11 +52,14 @@ if kptools -i kernel -f | grep -q "CONFIG_KPM=y"; then
 	exit 1
 fi
 
-if [ ! $(kptools -i kernel -f | grep CONFIG_KALLSYMS_ALL=y) ]; then
-	echo "! Patcher has Aborted."
-	echo "! KPatch-Next requires CONFIG_KALLSYMS_ALL to be Enabled."
-	echo "! But your kernel seems NOT enabled it."
-	exit 1
+if ! kptools -i kernel -f | grep -q "^CONFIG_KALLSYMS=y"; then
+    echo "! Patcher has Aborted."
+    echo "! CONFIG_KALLSYMS is required."
+    exit 1
+fi
+
+if ! kptools -i kernel -f | grep -q "^CONFIG_KALLSYMS_ALL=y"; then
+    echo "! Warning: CONFIG_KALLSYMS_ALL not enabled"
 fi
 
 if [  $(kptools -i kernel -l | grep patched=false) ]; then
@@ -103,4 +106,3 @@ else
   save_image_to_storage "new-boot.img"
   echo "- Successfully Patched!"
 fi
-
