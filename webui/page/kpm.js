@@ -20,12 +20,12 @@ function parseModuleInfo(output) {
 }
 
 function escapeHtml(value) {
-    return String(value ?? '')
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
 function isValidInstalledModuleName(name) {
@@ -66,12 +66,11 @@ async function getRuntimeKpms() {
     return Promise.all(moduleNames.map(async moduleName => {
         const infoResult = await exec(`kpatch kpm info ${escapeShell(moduleName)}`, { env: { PATH: `${modDir}/bin` } });
         const info = infoResult.errno === 0 ? parseModuleInfo(infoResult.stdout) : {};
-        return {
-            ...info,
+        return Object.assign(info, {
             name: info.name || moduleName,
             loaded: true,
             installed: false,
-        };
+        });
     }));
 }
 
@@ -107,14 +106,13 @@ async function getInstalledKpms() {
         if (!info || !isValidInstalledModuleName(info.name)) return null;
 
         const disabled = await exec(`[ -e ${escapeShell(`${installedPath}/disable`)} ]`);
-        return {
-            ...info,
+        return Object.assign(info, {
             installedId,
             installedPath,
             installedEnabled: disabled.errno !== 0,
             installed: true,
             loaded: false,
-        };
+        });
     }));
 
     return installed.filter(Boolean);
@@ -126,18 +124,16 @@ async function getKpmList() {
 
     installedKpms.forEach(installed => {
         const runtime = modules.get(installed.name);
-        modules.set(installed.name, runtime ? {
-            ...installed,
-            ...runtime,
+        modules.set(installed.name, runtime ? Object.assign({}, installed, runtime, {
             installed: true,
             installedId: installed.installedId,
             installedPath: installed.installedPath,
             installedEnabled: installed.installedEnabled,
             loaded: true,
-        } : installed);
+        }) : installed);
     });
 
-    return [...modules.values()].sort((a, b) => (a.name || '').toLowerCase().localeCompare((b.name || '').toLowerCase()));
+    return Array.from(modules.values()).sort((a, b) => (a.name || '').toLowerCase().localeCompare((b.name || '').toLowerCase()));
 }
 
 async function controlModule(moduleName, action) {
@@ -193,7 +189,12 @@ async function refreshKpmList() {
     const emptyMsg = document.getElementById('kpm-empty-msg');
     emptyMsg.textContent = getString('status_loading');
     emptyMsg.classList.remove('hidden');
-    allKpms = await getKpmList();
+    try {
+        allKpms = await getKpmList();
+    } catch (error) {
+        console.error('Failed to refresh KPM list', error);
+        allKpms = [];
+    }
     renderKpmList();
 }
 
