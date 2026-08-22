@@ -32,6 +32,7 @@
     <string name="button_install_mode">Install mode</string>
     <string name="button_install_kpm">Install</string>
     <string name="button_remove">Remove</string>
+    <string name="button_manual_exit">Exit manually</string>
     <!-- Labels -->
     <string name="label_input_control_parameters">Input control parameters:</string>
     <string name="label_parameters">Parameters</string>
@@ -69,6 +70,7 @@
     <string name="msg_no_module_found">No module found</string>
     <string name="msg_module_loaded">%1$s will be loaded.</string>
     <string name="msg_unload_module">Unload %1$s module?</string>
+    <string name="msg_embedded_module_persistent">Embedded KPM cannot be uninstalled and will remain active after reboot.</string>
     <string name="msg_redirecting_to">Redirecting to %1$s</string>
     <string name="msg_failed_open_link">Failed to open link with exec</string>
     <string name="msg_failed_parse_kernel">Failed to parse kernel:</string>

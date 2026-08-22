@@ -30,6 +30,19 @@ function escapeHtml(value) {
         .replace(/'/g, '&#039;');
 }
 
+function getLoadModeTag(module) {
+    const label = module.installed
+        ? getString('label_install_mode')
+        : module.load_source === 'embedded'
+            ? getString('info_embedded')
+            : getString('button_load_mode');
+    return `<span class="tag">${escapeHtml(label)}</span>`;
+}
+
+function isEmbeddedModule(module) {
+    return !module.installed && module.load_source === 'embedded';
+}
+
 function isValidInstalledModuleName(name) {
     return typeof name === 'string' && name.length > 0 && name.length < 128 &&
         name !== '.' && name !== '..' && !/[\\/\x00-\x1f\x7f]/.test(name);
@@ -217,9 +230,12 @@ function openControlDialog(module) {
 
 function openRemoveDialog(module) {
     const dialog = document.getElementById('unload-dialog');
-    const message = module.installed ? 'msg_remove_installed_module' : 'msg_unload_module';
+    const embedded = isEmbeddedModule(module);
+    const message = embedded
+        ? 'msg_embedded_module_persistent'
+        : module.installed ? 'msg_remove_installed_module' : 'msg_unload_module';
     dialog.querySelector('[slot=content]').textContent = getString(message, module.name);
-    dialog.querySelector('.confirm').textContent = getString(module.installed ? 'button_remove' : 'button_unload');
+    dialog.querySelector('.confirm').textContent = getString(embedded ? 'button_manual_exit' : module.installed ? 'button_remove' : 'button_unload');
     dialog.querySelector('.cancel').onclick = () => dialog.close();
     dialog.querySelector('.confirm').onclick = async () => {
         const confirm = dialog.querySelector('.confirm');
@@ -241,7 +257,7 @@ function renderKpmList() {
     allKpms.forEach(module => {
         const item = document.createElement('div');
         item.className = 'card module-card';
-        const installTag = module.installed ? `<span class="tag">${escapeHtml(getString('label_install_mode'))}</span>` : '';
+        const modeTag = getLoadModeTag(module);
         const enabledSwitch = module.installed
             ? `<md-switch class="installed-toggle" aria-label="${escapeHtml(getString('label_enable_installed_module'))}" ${module.installedEnabled ? 'selected' : ''}></md-switch>`
             : '';
@@ -250,7 +266,7 @@ function renderKpmList() {
             <div class="module-card-header">
                 <div class="module-card-title-row">
                     <div class="module-card-title">${escapeHtml(module.name)}</div>
-                    ${installTag}
+                    ${modeTag}
                 </div>
                 <div class="module-card-subtitle">${escapeHtml(module.version || getString('msg_unknown'))}, ${escapeHtml(getString('info_author', module.author || getString('msg_unknown')))}</div>
                 <div class="module-card-subtitle">${escapeHtml(getString('info_args', module.args || '(null)'))}</div>
@@ -264,7 +280,7 @@ function renderKpmList() {
                 <md-filled-tonal-icon-button class="control" ${module.loaded ? '' : 'disabled'} aria-label="${escapeHtml(getString('title_control_kpmodule'))}">
                     <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" /></svg></md-icon>
                 </md-filled-tonal-icon-button>
-                <md-filled-tonal-icon-button class="unload" aria-label="${escapeHtml(getString(module.installed ? 'button_remove' : 'button_unload'))}">
+                <md-filled-tonal-icon-button class="unload" aria-label="${escapeHtml(getString(isEmbeddedModule(module) ? 'button_manual_exit' : module.installed ? 'button_remove' : 'button_unload'))}">
                     <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></md-icon>
                 </md-filled-tonal-icon-button>
             </div>
