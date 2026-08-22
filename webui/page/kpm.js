@@ -3,12 +3,14 @@ import { modDir, persistDir, initInfo, MAX_CHUNK_SIZE, escapeShell, linkRedirect
 import { getString } from '../language.js';
 import { setupPullToRefresh } from '../pull-to-refresh.js';
 
-const installedKpmDir = `${persistDir}/installed-kpm`;
-
 let allKpms = [];
 let searchQuery = '';
 let clickCount = 0;
 let lastClickTime = 0;
+
+function getInstalledKpmDir() {
+    return `${persistDir}/installed-kpm`;
+}
 
 function parseModuleInfo(output) {
     const moduleInfo = {};
@@ -86,11 +88,11 @@ async function getInstalledKpms() {
             loaded: false,
             installed: true,
             installedEnabled: false,
-            installedPath: `${installedKpmDir}/Installed Module`,
+            installedPath: `${getInstalledKpmDir()}/Installed Module`,
         }];
     }
 
-    const root = escapeShell(installedKpmDir);
+    const root = escapeShell(getInstalledKpmDir());
     const result = await exec(`if [ -d ${root} ]; then for path in ${root}/*; do [ -d "$path" ] && printf '%s\\n' "$path"; done; fi`);
     const paths = result.stdout.split('\n').map(path => path.replace(/\r$/, '')).filter(Boolean);
 
@@ -515,7 +517,7 @@ async function uploadAndInstallModule() {
             const confirm = dialog.querySelector('.confirm');
             confirm.onclick = async () => {
                 confirm.disabled = true;
-                const targetDir = `${installedKpmDir}/${info.name}`;
+                const targetDir = `${getInstalledKpmDir()}/${info.name}`;
                 const target = `${targetDir}/${info.name}.kpm`;
                 const staged = `${target}.new`;
                 try {
