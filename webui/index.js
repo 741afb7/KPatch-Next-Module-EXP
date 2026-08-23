@@ -166,16 +166,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     getMaxChunkSize();
 
-    await loadTranslations();
-    await Promise.all([updateStatus(), initInfo()]);
+    try {
+        await loadTranslations();
+        await Promise.all([updateStatus(), initInfo()]);
 
-    excludeModule.initExcludePage();
-    kpmModule.initKPMPage();
-
-    // splash screen
-    if (splash) {
-        setTimeout(() => splash.classList.add('exit'), 50);
-        setTimeout(() => splash.remove(), 400);
+        excludeModule.initExcludePage();
+        kpmModule.initKPMPage();
+    } catch (error) {
+        console.error('WebUI initialization failed', error);
+    } finally {
+        // Do not leave the application on its splash screen when a device command fails.
+        if (splash) {
+            setTimeout(() => splash.classList.add('exit'), 50);
+            setTimeout(() => splash.remove(), 400);
+        }
     }
 });
 
