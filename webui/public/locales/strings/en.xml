@@ -28,6 +28,10 @@
     <string name="button_load">Load</string>
     <string name="button_unload">Unload</string>
     <string name="button_refresh">Refresh</string>
+    <string name="button_load_mode">Load mode</string>
+    <string name="button_install_mode">Install mode</string>
+    <string name="button_install_kpm">Install</string>
+    <string name="button_remove">Remove</string>
     <!-- Labels -->
     <string name="label_input_control_parameters">Input control parameters:</string>
     <string name="label_parameters">Parameters</string>
@@ -35,6 +39,8 @@
     <string name="label_show_system_app">Show system app</string>
     <string name="label_system_default">System Default</string>
     <string name="label_trigger_event">Trigger Event</string>
+    <string name="label_install_mode">INSTALL MODE</string>
+    <string name="label_enable_installed_module">Enable installed module</string>
     <string name="label_flash_to_device">Flash to Device</string>
     <!-- Status -->
     <string name="status_not_installed">Not installed</string>
@@ -79,6 +85,16 @@
     <string name="msg_successfully_loaded">Successfully loaded %1$s</string>
     <string name="msg_failed_load_module">Failed to load module %1$s</string>
     <string name="msg_failed_get_module_info">Failed to get module info</string>
+    <string name="title_choose_kpm_mode">Choose KPM mode</string>
+    <string name="title_install_kpmodule">Install KPModule</string>
+    <string name="msg_install_module">Install %1$s for the next boot?</string>
+    <string name="msg_successfully_installed">Successfully installed %1$s</string>
+    <string name="msg_failed_install_module">Failed to install %1$s</string>
+    <string name="msg_invalid_kpm_name">The KPM name is invalid</string>
+    <string name="msg_remove_installed_module">Remove installed %1$s module?</string>
+    <string name="msg_failed_remove_installed_module">Failed to remove installed %1$s</string>
+    <string name="msg_failed_update_module_state">Failed to update %1$s state</string>
+    <string name="msg_failed_unload_module">Failed to unload %1$s</string>
     <string name="msg_error_loading_apps">Error loading apps: </string>
     <string name="msg_error_rendering_apps">Error rendering apps: </string>
     <string name="msg_unknown">Unknown</string>

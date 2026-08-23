@@ -28,6 +28,10 @@
     <string name="button_load">加载</string>
     <string name="button_unload">卸载</string>
     <string name="button_refresh">刷新</string>
+    <string name="button_load_mode">加载模式</string>
+    <string name="button_install_mode">安装模式</string>
+    <string name="button_install_kpm">安装</string>
+    <string name="button_remove">删除</string>
     <!-- Labels -->
     <string name="label_input_control_parameters">输入控制参数：</string>
     <string name="label_parameters">参数</string>
@@ -35,6 +39,8 @@
     <string name="label_show_system_app">显示系统应用</string>
     <string name="label_system_default">系统默认</string>
     <string name="label_trigger_event">触发事件</string>
+    <string name="label_install_mode">安装模式</string>
+    <string name="label_enable_installed_module">启用已安装模块</string>
     <string name="label_flash_to_device">直接安装</string>
     <!-- Status -->
     <string name="status_not_installed">未安装</string>
@@ -79,6 +85,16 @@
     <string name="msg_successfully_loaded">成功加载 %1$s</string>
     <string name="msg_failed_load_module">加载模块 %1$s 失败</string>
     <string name="msg_failed_get_module_info">获取模块信息失败</string>
+    <string name="title_choose_kpm_mode">选择 KPM 模式</string>
+    <string name="title_install_kpmodule">安装 KPModule</string>
+    <string name="msg_install_module">安装 %1$s，下一次启动时加载？</string>
+    <string name="msg_successfully_installed">成功安装 %1$s</string>
+    <string name="msg_failed_install_module">安装 %1$s 失败</string>
+    <string name="msg_invalid_kpm_name">KPM 名称无效</string>
+    <string name="msg_remove_installed_module">删除已安装的 %1$s 模块？</string>
+    <string name="msg_failed_remove_installed_module">删除已安装的 %1$s 失败</string>
+    <string name="msg_failed_update_module_state">更新 %1$s 状态失败</string>
+    <string name="msg_failed_unload_module">卸载 %1$s 失败</string>
     <string name="msg_error_loading_apps">加载应用时出错：</string>
     <string name="msg_error_rendering_apps">渲染应用时出错：</string>
     <string name="msg_unknown">未知</string>
