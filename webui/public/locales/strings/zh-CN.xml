@@ -32,6 +32,7 @@
     <string name="button_install_mode">安装模式</string>
     <string name="button_install_kpm">安装</string>
     <string name="button_remove">删除</string>
+    <string name="button_manual_exit">手动退出</string>
     <!-- Labels -->
     <string name="label_input_control_parameters">输入控制参数：</string>
     <string name="label_parameters">参数</string>
@@ -69,6 +70,7 @@
     <string name="msg_no_module_found">未发现模块</string>
     <string name="msg_module_loaded">%1$s 将被加载。</string>
     <string name="msg_unload_module">卸载 %1$s 模块？</string>
+    <string name="msg_embedded_module_persistent">嵌入的 KPM 无法卸载，重启后仍会保持生效。</string>
     <string name="msg_redirecting_to">正在跳转到 %1$s</string>
     <string name="msg_failed_open_link">exec 打开链接失败</string>
     <string name="msg_failed_parse_kernel">解析内核失败：</string>
