@@ -8,7 +8,8 @@ PATH="$MODDIR/bin:$PATH"
 
 mkdir -p "$KPNDIR"
 if ! kpatch event post-fs-data before; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') failed to report post-fs-data event" >> "$KPNDIR/post-fs-data.log"
+    # echo "$(date '+%Y-%m-%d %H:%M:%S') failed to report post-fs-data event" >> "$KPNDIR/post-fs-data.log"
+    :
 fi
 
 mkdir -p "$SERVICE_D"
