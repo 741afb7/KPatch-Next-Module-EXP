@@ -1,7 +1,7 @@
 id=KPatch-Next
 name=KPatch-Next-EXP
-version=v0.0.7
-versionCode=7
+version=v0.0.8
+versionCode=8
 author=rifsxd, KOWX712, 741afb7
 description=Standalone implementation of KPM support for Magisk/KernelSU
 banner=banner.png
